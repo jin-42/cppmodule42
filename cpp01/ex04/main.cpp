@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 
+// Fonction pour remplacer toutes les occurrences de s1 par s2 dans content
 void replaceStrings(std::string &content, const std::string &s1, const std::string &s2) {
     size_t pos = 0;
     while ((pos = content.find(s1, pos)) != std::string::npos) {
@@ -18,37 +19,38 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    std::string filename = argv[1];
-    std::string s1 = argv[2];
-    std::string s2 = argv[3];
-
     // Vérification que s1 n'est pas vide
-    if (s1.empty()) {
+    if (std::string(argv[2]).empty()) {
         std::cerr << "Error: s1 cannot be empty" << std::endl;
         return 1;
     }
 
-    // Ouvrir directement le fichier avec open dans le constructeur
-    std::ifstream inFile(filename.c_str());  // Utilisation directe du constructeur avec open
-    if (!inFile.is_open()) {
-        std::cerr << "Error: Could not open file " << filename << std::endl;
+    // Ouvrir le fichier d'entrée
+    std::ifstream inFile(argv[1]);
+    if (!inFile) {
+        std::cerr << "Error: Could not open file " << argv[1] << std::endl;
         return 1;
     }
 
     // Lire tout le fichier dans une string
     std::string content;
     std::string line;
+    bool firstLine = true;  // Pour éviter d'ajouter une nouvelle ligne inutile à la fin
     while (std::getline(inFile, line)) {
-        content += line + '\n';  // Ajouter chaque ligne avec un saut de ligne
+        if (!firstLine) {
+            content += '\n';  // Ajouter un saut de ligne entre chaque ligne
+        }
+        content += line;
+        firstLine = false;
     }
     inFile.close();  // Fermer le fichier après la lecture
 
     // Remplacer toutes les occurrences de s1 par s2
-    replaceStrings(content, s1, s2);
+    replaceStrings(content, argv[2], argv[3]);
 
-    // Ouvrir directement le fichier de sortie avec open dans le constructeur
-    std::ofstream outFile((filename + ".replace").c_str());  // Utilisation directe du constructeur avec open
-    if (!outFile.is_open()) {
+    // Ouvrir le fichier de sortie
+    std::ofstream outFile((std::string(argv[1]) + ".replace").c_str());
+    if (!outFile) {
         std::cerr << "Error: Could not create output file" << std::endl;
         return 1;
     }
@@ -59,3 +61,4 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+
