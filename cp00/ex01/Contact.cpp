@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Contact.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fsulvac < fsulvac@student.42lyon.fr >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/17 20:41:12 by fsulvac           #+#    #+#             */
+/*   Updated: 2024/10/17 20:41:13 by fsulvac          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Contact.hpp"
 
 void Contact::setFirstName(const std::string &firstName) { this->firstName = firstName; }
